@@ -1,0 +1,221 @@
+--------------------------------------------------------------------------------
+Processing file 'ram.py'
+ outputting to 'ram_up.py'
+--------------------------------------------------------------------------------
+
+'ram.py' Line 448
+--------------------------------------------------------------------------------
+
+Added keyword 'concat_dim' to reordered function 'tf.concat'
+Added keyword 'values' to reordered function 'tf.concat'
+
+    Old:     sampled_locs = tf.concat(0, sampled_locs)
+                                                       
+    New:     sampled_locs = tf.concat(axis=0, values=sampled_locs)
+                                      ~~~~~   ~~~~~~~              
+
+'ram.py' Line 451
+--------------------------------------------------------------------------------
+
+Added keyword 'concat_dim' to reordered function 'tf.concat'
+Added keyword 'values' to reordered function 'tf.concat'
+
+    Old:     mean_locs = tf.concat(0, mean_locs)
+                                                 
+    New:     mean_locs = tf.concat(axis=0, values=mean_locs)
+                                   ~~~~~   ~~~~~~~           
+
+'ram.py' Line 484
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:     tf.scalar_summary("reward", reward)
+             ~~~~~~~~~~~~~~~~~                   
+    New:     tf.summary.scalar("reward", reward)
+             ~~~~~~~~~~~~~~~~~                   
+
+'ram.py' Line 485
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:     tf.scalar_summary("cost", cost)
+             ~~~~~~~~~~~~~~~~~               
+    New:     tf.summary.scalar("cost", cost)
+             ~~~~~~~~~~~~~~~~~               
+
+'ram.py' Line 454
+--------------------------------------------------------------------------------
+
+Added keyword 'concat_dim' to reordered function 'tf.concat'
+Added keyword 'values' to reordered function 'tf.concat'
+
+    Old:     glimpse_images = tf.concat(0, glimpse_images)
+                                                           
+    New:     glimpse_images = tf.concat(axis=0, values=glimpse_images)
+                                        ~~~~~   ~~~~~~~                
+
+'ram.py' Line 487
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:     tf.scalar_summary(" mean(R - b)", rminusb)
+             ~~~~~~~~~~~~~~~~~                          
+    New:     tf.summary.scalar(" mean(R - b)", rminusb)
+             ~~~~~~~~~~~~~~~~~                          
+
+'ram.py' Line 488
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.merge_all_summaries' to 'tf.summary.merge_all'
+
+    Old:     summary_op = tf.merge_all_summaries()
+                          ~~~~~~~~~~~~~~~~~~~~~~   
+    New:     summary_op = tf.summary.merge_all()
+                          ~~~~~~~~~~~~~~~~~~~~   
+
+'ram.py' Line 486
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:     tf.scalar_summary("mean(b)", avg_b)
+             ~~~~~~~~~~~~~~~~~                   
+    New:     tf.summary.scalar("mean(b)", avg_b)
+             ~~~~~~~~~~~~~~~~~                   
+
+'ram.py' Line 300
+--------------------------------------------------------------------------------
+
+Added keyword 'concat_dim' to reordered function 'tf.concat'
+Added keyword 'values' to reordered function 'tf.concat'
+
+    Old:     J = tf.concat(1, [tf.log(p_y + SMALL_NUM) * (onehot_labels_placeholder), tf.log(p_loc + SMALL_NUM) * (R - no_grad_b)])
+                                                                                                                                    
+    New:     J = tf.concat(axis=1, values=[tf.log(p_y + SMALL_NUM) * (onehot_labels_placeholder), tf.log(p_loc + SMALL_NUM) * (R - no_grad_b)])
+                           ~~~~~   ~~~~~~~                                                                                                      
+
+'ram.py' Line 502
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.train.SummaryWriter' to 'tf.summary.FileWriter'
+
+    Old:         summary_writer = tf.train.SummaryWriter(summaryFolderName, graph=sess.graph)
+                                  ~~~~~~~~~~~~~~~~~~~~~~                                      
+    New:         summary_writer = tf.summary.FileWriter(summaryFolderName, graph=sess.graph)
+                                  ~~~~~~~~~~~~~~~~~~~~~                                      
+
+'ram.py' Line 496
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.initialize_all_variables' to 'tf.global_variables_initializer'
+
+    Old:     init = tf.initialize_all_variables()
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+    New:     init = tf.global_variables_initializer()
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+
+'ram.py' Line 483
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:     tf.scalar_summary("reconstructionCost", reconstructionCost)
+             ~~~~~~~~~~~~~~~~~                                           
+    New:     tf.summary.scalar("reconstructionCost", reconstructionCost)
+             ~~~~~~~~~~~~~~~~~                                           
+
+'ram.py' Line 277
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.pack' to 'tf.stack'
+
+    Old:     b = tf.pack(baselines)
+                 ~~~~~~~            
+    New:     b = tf.stack(baselines)
+                 ~~~~~~~~            
+
+'ram.py' Line 278
+--------------------------------------------------------------------------------
+
+Added keyword 'concat_dim' to reordered function 'tf.concat'
+Added keyword 'values' to reordered function 'tf.concat'
+
+    Old:     b = tf.concat(2, [b, b])
+                                      
+    New:     b = tf.concat(axis=2, values=[b, b])
+                           ~~~~~   ~~~~~~~        
+
+'ram.py' Line 152
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.pack' to 'tf.stack'
+
+    Old:         zooms.append(tf.pack(imgZooms))
+                              ~~~~~~~            
+    New:         zooms.append(tf.stack(imgZooms))
+                              ~~~~~~~~            
+
+'ram.py' Line 377
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:         tf.scalar_summary('param_mean/' + name, mean)
+                 ~~~~~~~~~~~~~~~~~                             
+    New:         tf.summary.scalar('param_mean/' + name, mean)
+                 ~~~~~~~~~~~~~~~~~                             
+
+'ram.py' Line 154
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.pack' to 'tf.stack'
+
+    Old:     zooms = tf.pack(zooms)
+                     ~~~~~~~        
+    New:     zooms = tf.stack(zooms)
+                     ~~~~~~~~        
+
+'ram.py' Line 380
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:         tf.scalar_summary('param_sttdev/' + name, stddev)
+                 ~~~~~~~~~~~~~~~~~                                 
+    New:         tf.summary.scalar('param_sttdev/' + name, stddev)
+                 ~~~~~~~~~~~~~~~~~                                 
+
+'ram.py' Line 381
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:         tf.scalar_summary('param_max/' + name, tf.reduce_max(var))
+                 ~~~~~~~~~~~~~~~~~                                          
+    New:         tf.summary.scalar('param_max/' + name, tf.reduce_max(var))
+                 ~~~~~~~~~~~~~~~~~                                          
+
+'ram.py' Line 382
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.scalar_summary' to 'tf.summary.scalar'
+
+    Old:         tf.scalar_summary('param_min/' + name, tf.reduce_min(var))
+                 ~~~~~~~~~~~~~~~~~                                          
+    New:         tf.summary.scalar('param_min/' + name, tf.reduce_min(var))
+                 ~~~~~~~~~~~~~~~~~                                          
+
+'ram.py' Line 383
+--------------------------------------------------------------------------------
+
+Renamed function 'tf.histogram_summary' to 'tf.summary.histogram'
+
+    Old:         tf.histogram_summary(name, var)
+                 ~~~~~~~~~~~~~~~~~~~~            
+    New:         tf.summary.histogram(name, var)
+                 ~~~~~~~~~~~~~~~~~~~~            
+
+

@@ -1,0 +1,7 @@
+demo/
+mnist_data/
+summary/
+chckPts/
+oldScripts/
+__pycache_/
+
