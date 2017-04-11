@@ -214,6 +214,7 @@ def affineTransform(x,output_dim):
 
 def model():
     # initialize the location under unif[-1,1], for all example in the batch
+
     initial_loc = tf.random_uniform((batch_size, 2), minval=-1, maxval=1)
     mean_locs.append(initial_loc)
     initial_loc = tf.tanh(initial_loc + tf.random_normal(initial_loc.get_shape(), 0, loc_sd))
@@ -296,11 +297,11 @@ def calc_reward(outputs):
     R = tf.tile(R, [1, 2])
     # get the location
     p_loc = gaussian_pdf(mean_locs, sampled_locs)
-    p_loc = tf.tanh(p_loc)
+    p_loc = tf.sigmoid(p_loc)
     # p_loc_orig = p_loc
 
     p_loc_list = tf.unstack(p_loc, axis=1)
-    p_loc_first = p_loc_list[0]
+    p_loc_first = p_loc_list[1]
     #p_loc = tf.reshape(p_loc, (batch_size, (nGlimpses) * 2))
 
     # define the cost function
