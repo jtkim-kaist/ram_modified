@@ -1,16 +1,18 @@
 # ram_modified
 
---Author
+-- Author
 
-Juntae, Kim | jtkim@kaist.ac.kr
+Juntae, Kim  |  jtkim@kaist.ac.kr
 
---require
+-- Require
 
 'tensorflow rc 1.1.0-rc0'
 
--- updated file
+-- Updated file
 
 ram_modified.py
+
+-- Description
 
 This is modified version of https://github.com/jlindsey15/RAM
 
