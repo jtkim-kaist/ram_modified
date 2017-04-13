@@ -32,7 +32,7 @@ Thank you!
 
 ## Result
 
-After 300,000 epoch, I got about 97% accuracy.
+After 600,000 epoch, I got about 98% accuracy.
 
 ## Reference
 
