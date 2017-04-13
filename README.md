@@ -11,6 +11,8 @@ tensorflow rc 1.1.0-rc0
 
 ## Description
 
+code: 'ram_modified.py'
+
 This project is modified version of https://github.com/jlindsey15/RAM.
 The critical problem of last implemetnation is that the location network cannot learn because of tf.stop_gradient implementation. 
 If 'tf.stop_gradient' was commented, the classification result was very bad.
