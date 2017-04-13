@@ -1,4 +1,4 @@
-## Recurrent Attention Model (RAM)
+## Tensorflow Implementation of Recurrent Attention Model (RAM)
 
 
 ## Author
