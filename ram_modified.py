@@ -67,7 +67,7 @@ if translateMnist:
     initLr = 1e-3
     lr_min = 1e-4
     lrDecayRate = .999
-    lrDecayFreq = 300
+    lrDecayFreq = 200
     momentumValue = .9
     batch_size = 64
 
@@ -184,7 +184,7 @@ def get_next_input(output):
     core_net_out = tf.stop_gradient(output)
 
     # baseline = tf.sigmoid(tf.matmul(core_net_out, Wb_h_b) + Bb_h_b)
-    baseline = tf.matmul(core_net_out, Wb_h_b) + Bb_h_b
+    baseline = tf.sigmoid(tf.matmul(core_net_out, Wb_h_b) + Bb_h_b)
     baselines.append(baseline)
 
     # compute the next location, then impose noise
@@ -259,7 +259,7 @@ def model():
         else:
             first_hiddenState = tf.stop_gradient(hiddenState)
             # baseline = tf.sigmoid(tf.matmul(first_hiddenState, Wb_h_b) + Bb_h_b)
-            baseline = tf.matmul(first_hiddenState, Wb_h_b) + Bb_h_b
+            baseline = tf.sigmoid(tf.matmul(first_hiddenState, Wb_h_b) + Bb_h_b)
             baselines.append(baseline)
         REUSE = True  # share variables for later recurrence
 
