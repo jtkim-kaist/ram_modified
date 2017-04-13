@@ -24,9 +24,9 @@ softly separate location network and others through multi-layer RNN. From this, 
 is not a good idea so separate them, and finally got a good result. 
 In summary, the learning stretegy is as follow. 
 
-1. location network, baseline network : learn through only gradients of reinforcement learning.
+1. location network, baseline network : learn with gradients of reinforcement learning only.
 
-2. glimpse network, core network : learn through only gradients of supervised learning.
+2. glimpse network, core network : learn with gradients of supervised learning only.
 
 Thank you!
 
