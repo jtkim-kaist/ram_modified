@@ -18,7 +18,7 @@ The critical problem of last implemetnation is that the location network cannot 
 If 'tf.stop_gradient' was commented, the classification result was very bad.
 The reason I think is that the problem is originated from sharing the gradient flow through location, core, glimpse network.
 Through gradient sharing, gradients of classification part are corrupted by gradients of reinforcement part so that classification result 
-become very bad. (If someone want to gradient sharing, the weighted loss should be needed. please refer https://arxiv.org/pdf/1412.7755.pdf)
+become very bad. (If someone want to share gradient, the weighted loss should be needed. please refer https://arxiv.org/pdf/1412.7755.pdf)
 According to their post research, 'Multiple Object Recognition with Visual Attention' (https://arxiv.org/pdf/1412.7755.pdf) they 
 softly separate location network and others through multi-layer RNN. From this, I assume that sharing the gradient through whole network 
 is not a good idea so separate them, and finally got a good result. 
