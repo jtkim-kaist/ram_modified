@@ -6,7 +6,6 @@ import time
 import random
 import sys
 import os
-distributions = tf.contrib.distributions
 
 
 try:
@@ -67,10 +66,10 @@ if translateMnist:
 
     initLr = 1e-3
     lr_min = 1e-4
-    lrDecayRate = .99
-    lrDecayFreq = 200
+    lrDecayRate = .999
+    lrDecayFreq = 300
     momentumValue = .9
-    batch_size = 32
+    batch_size = 64
 
 else:
     print("CENTERED MNIST")
@@ -89,8 +88,8 @@ else:
 # model parameters
 channels = 1                # mnist are grayscale images
 totalSensorBandwidth = depth * channels * (sensorBandwidth **2)
-nGlimpses = 7               # number of glimpses
-loc_sd = 0.11               # std when setting the location
+nGlimpses = 6               # number of glimpses
+loc_sd = 0.22               # std when setting the location
 
 # network units
 hg_size = 128               #
@@ -184,7 +183,8 @@ def get_next_input(output):
     # the next location is computed by the location network
     core_net_out = tf.stop_gradient(output)
 
-    baseline = tf.sigmoid(tf.matmul(core_net_out, Wb_h_b) + Bb_h_b)
+    # baseline = tf.sigmoid(tf.matmul(core_net_out, Wb_h_b) + Bb_h_b)
+    baseline = tf.matmul(core_net_out, Wb_h_b) + Bb_h_b
     baselines.append(baseline)
 
     # compute the next location, then impose noise
@@ -194,14 +194,14 @@ def get_next_input(output):
         mean_loc = tf.maximum(-1.0, tf.minimum(1.0, tf.matmul(core_net_out, Wl_h_l) + sampled_locs[-1] ))
     else:
         # mean_loc = tf.clip_by_value(tf.matmul(core_net_out, Wl_h_l) + Bl_h_l, -1, 1)
-        mean_loc = tf.tanh(tf.matmul(core_net_out, Wl_h_l) + Bl_h_l)
-        mean_loc = tf.clip_by_value(mean_loc, -0.9, 0.9)
+        mean_loc = tf.matmul(core_net_out, Wl_h_l) + Bl_h_l
+        mean_loc = tf.clip_by_value(mean_loc, -1, 1)
     # mean_loc = tf.stop_gradient(mean_loc)
     mean_locs.append(mean_loc)
 
     # add noise
-    sample_loc = tf.tanh(mean_loc + tf.random_normal(mean_loc.get_shape(), 0, loc_sd))
-    # sample_loc = tf.maximum(-1.0, tf.minimum(1.0, mean_loc + tf.random_normal(mean_loc.get_shape(), 0, loc_sd)))
+    # sample_loc = tf.tanh(mean_loc + tf.random_normal(mean_loc.get_shape(), 0, loc_sd))
+    sample_loc = tf.maximum(-1.0, tf.minimum(1.0, mean_loc + tf.random_normal(mean_loc.get_shape(), 0, loc_sd)))
 
     # don't propagate throught the locations
     sample_loc = tf.stop_gradient(sample_loc)
@@ -221,10 +221,14 @@ def affineTransform(x,output_dim):
 
 
 def model():
+
     # initialize the location under unif[-1,1], for all example in the batch
     initial_loc = tf.random_uniform((batch_size, 2), minval=-1, maxval=1)
     mean_locs.append(initial_loc)
-    initial_loc = tf.tanh(initial_loc + tf.random_normal(initial_loc.get_shape(), 0, loc_sd))
+
+    # initial_loc = tf.tanh(initial_loc + tf.random_normal(initial_loc.get_shape(), 0, loc_sd))
+    initial_loc = tf.clip_by_value(initial_loc + tf.random_normal(initial_loc.get_shape(), 0, loc_sd), -1, 1)
+
     sampled_locs.append(initial_loc)
 
     # get the input using the input network
@@ -254,7 +258,8 @@ def model():
             glimpse = get_next_input(hiddenState)
         else:
             first_hiddenState = tf.stop_gradient(hiddenState)
-            baseline = tf.sigmoid(tf.matmul(first_hiddenState, Wb_h_b) + Bb_h_b)
+            # baseline = tf.sigmoid(tf.matmul(first_hiddenState, Wb_h_b) + Bb_h_b)
+            baseline = tf.matmul(first_hiddenState, Wb_h_b) + Bb_h_b
             baselines.append(baseline)
         REUSE = True  # share variables for later recurrence
 
@@ -317,13 +322,13 @@ def calc_reward(outputs):
     cost = -J
     var_list = tf.trainable_variables()
     grads = tf.gradients(cost, var_list)
-    grads, _ = tf.clip_by_global_norm(grads, 0.05)
+    grads, _ = tf.clip_by_global_norm(grads, 0.5)
     # define the optimizer
     # lr_max = tf.maximum(lr, lr_min)
     optimizer = tf.train.AdamOptimizer(lr)
     # optimizer = tf.train.MomentumOptimizer(lr, momentumValue)
     # train_op = optimizer.minimize(cost, global_step)
-    train_op = optimizer.apply_gradients(zip(grads, var_list))
+    train_op = optimizer.apply_gradients(zip(grads, var_list), global_step=global_step)
 
     return cost, reward, max_p_y, correct_y, train_op, b, tf.reduce_mean(b), tf.reduce_mean(R - b), lr
 
@@ -339,7 +344,6 @@ def preTrain(outputs):
 
     train_op_r = tf.train.RMSPropOptimizer(lr_r).minimize(reconstructionCost)
     return reconstructionCost, reconstruction, train_op_r
-
 
 
 def evaluate():
