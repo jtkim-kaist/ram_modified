@@ -14,7 +14,7 @@ tensorflow rc 1.1.0-rc0
 code: 'ram_modified.py'
 
 This project is modified version of https://github.com/jlindsey15/RAM.
-The critical problem of last implemetnation is that the location network cannot learn because of tf.stop_gradient implementation. 
+The critical problem of last implemetnation is that the location network cannot learn because of tf.stop_gradient implementation so that they got just '94% accuracy'. It seems relatively bad compared to the result of paper.
 If 'tf.stop_gradient' was commented, the classification result was very bad.
 The reason I think is that the problem is originated from sharing the gradient flow through location, core, glimpse network.
 Through gradient sharing, gradients of classification part are corrupted by gradients of reinforcement part so that classification result 
